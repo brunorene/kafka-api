@@ -5,11 +5,12 @@ import org.springframework.stereotype.Component
 import uk.sky.poc.kafkaapi.KafkaConfig
 
 @Component
-class KafkaBackground {
+class KafkaBackground(var counter: Int = 0) {
 
     @KafkaListener(topics = [(KafkaConfig.TOPIC)], containerFactory = KafkaConfig.FACTORY, groupId = "api")
-    fun receiveEntities(results: List<String>) {
+    fun receiveEntities(results: List<Map<String, String>>) {
         println(results)
+        counter += results.size
     }
 
 }

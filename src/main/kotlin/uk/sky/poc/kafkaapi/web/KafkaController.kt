@@ -1,22 +1,27 @@
 package uk.sky.poc.kafkaapi.web
 
-import com.google.gson.Gson
 import com.google.gson.stream.JsonReader
 import org.apache.kafka.clients.producer.ProducerRecord
 import org.springframework.kafka.core.KafkaTemplate
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RestController
 import reactor.core.publisher.Mono
 import uk.sky.poc.kafkaapi.KafkaConfig
+import uk.sky.poc.kafkaapi.listener.KafkaBackground
 import java.io.FileReader
 
 @RestController
-class KafkaController(private val kafkaTemplate: KafkaTemplate<String, String>) {
+class KafkaController(private val kafkaTemplate: KafkaTemplate<String, Map<String, Any>>,
+                      private val kafkaBackground: KafkaBackground) {
+
+
+    @GetMapping("/counter")
+    fun getCounter() = Mono.just(kafkaBackground.counter)
 
     @PostMapping("/load-kafka")
     fun loadKafka(): Mono<String> {
-        val gson = Gson()
-        var count: Int = 0
+        var count = 0
         JsonReader(FileReader("solr_dump.json")).use { reader ->
             reader.beginObject()
             while (reader.hasNext()) {
@@ -33,7 +38,7 @@ class KafkaController(private val kafkaTemplate: KafkaTemplate<String, String>) 
                                     val name = reader.nextName()
                                     when (reader.peek().toString()) {
                                         "BEGIN_ARRAY" -> {
-                                            var list = mutableListOf<String>()
+                                            val list = mutableListOf<String>()
                                             reader.beginArray()
                                             while (reader.hasNext())
                                                 list.add(reader.nextString())
@@ -44,8 +49,8 @@ class KafkaController(private val kafkaTemplate: KafkaTemplate<String, String>) 
                                     }
                                 }
                                 reader.endObject()
-                                kafkaTemplate.send(ProducerRecord(KafkaConfig.TOPIC,
-                                        map[KafkaConfig.ID].toString(), gson.toJson(map)))
+                                kafkaTemplate.send(ProducerRecord<String, Map<String, Any>>(KafkaConfig.TOPIC,
+                                        map[KafkaConfig.ID].toString(), map))
                                 count++
                             }
                             reader.endArray()
