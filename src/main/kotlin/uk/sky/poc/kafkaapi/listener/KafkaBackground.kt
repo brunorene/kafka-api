@@ -3,7 +3,7 @@ package uk.sky.poc.kafkaapi.listener
 import com.hazelcast.core.HazelcastInstance
 import org.springframework.kafka.annotation.KafkaListener
 import org.springframework.stereotype.Component
-import uk.sky.poc.kafkaapi.KafkaConfig
+import uk.sky.poc.kafkaapi.config.KafkaConfig
 
 @Component
 class KafkaBackground(var counter: Int = 0, private val hz: HazelcastInstance) {

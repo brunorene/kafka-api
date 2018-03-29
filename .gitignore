@@ -24,4 +24,4 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
-/solr_dump.json
+solr_dump.json

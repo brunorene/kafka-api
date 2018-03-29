@@ -1,10 +1,11 @@
-package uk.sky.poc.kafkaapi
+package uk.sky.poc.kafkaapi.config
 
 import org.apache.kafka.clients.consumer.ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG
 import org.apache.kafka.clients.consumer.ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG
 import org.apache.kafka.clients.producer.ProducerConfig.*
 import org.apache.kafka.common.serialization.StringDeserializer
 import org.apache.kafka.common.serialization.StringSerializer
+import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.kafka.annotation.EnableKafka
@@ -16,8 +17,12 @@ import uk.sky.poc.kafkaapi.support.MapDeserializer
 import uk.sky.poc.kafkaapi.support.MapSerializer
 
 @Configuration
+@ConfigurationProperties(prefix = "kafka")
 @EnableKafka
 class KafkaConfig {
+
+    lateinit var host: String
+    lateinit var port: String
 
     companion object {
         const val TOPIC = "ENTITIES"
@@ -32,7 +37,7 @@ class KafkaConfig {
 
     @Bean
     fun producerConfigs(): Map<String, Any> = mapOf(
-            BOOTSTRAP_SERVERS_CONFIG to "localhost:9092",
+            BOOTSTRAP_SERVERS_CONFIG to "$host:$port",
             KEY_SERIALIZER_CLASS_CONFIG to StringSerializer::class.java,
             VALUE_SERIALIZER_CLASS_CONFIG to MapSerializer::class.java)
 
@@ -57,7 +62,7 @@ class KafkaConfig {
     }
 
     @Bean
-    fun consumerConfigs() = mapOf(BOOTSTRAP_SERVERS_CONFIG to "localhost:9092",
+    fun consumerConfigs() = mapOf(BOOTSTRAP_SERVERS_CONFIG to "$host:$port",
             KEY_DESERIALIZER_CLASS_CONFIG to StringDeserializer::class.java,
             VALUE_DESERIALIZER_CLASS_CONFIG to MapDeserializer::class.java)
 
