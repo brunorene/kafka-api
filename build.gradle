@@ -1,3 +1,5 @@
+import com.bmuschko.gradle.docker.tasks.image.*
+
 buildscript {
     ext {
         kotlinVersion = '1.2.30'
@@ -5,11 +7,14 @@ buildscript {
     }
     repositories {
         mavenCentral()
+        maven { url 'http://repo.spring.io/plugins-release' }
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
         classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}")
+        classpath('io.spring.gradle:propdeps-plugin:0.0.9.RELEASE')
+        classpath('com.bmuschko:gradle-docker-plugin:3.2.5')
     }
 }
 
@@ -18,9 +23,12 @@ apply plugin: 'kotlin-spring'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'propdeps'
+apply plugin: 'propdeps-idea'
+apply plugin: 'com.bmuschko.docker-remote-api'
 
 group = 'uk.sky.poc'
-version = '0.0.1-SNAPSHOT'
+version = '1.0.0'
 sourceCompatibility = 1.8
 compileKotlin {
     kotlinOptions {
@@ -46,17 +54,37 @@ repositories {
     jcenter()
 }
 
+configurations.all {
+    exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+}
 
 dependencies {
     compile('org.jetbrains.kotlinx:kotlinx-coroutines-core:0.22.5')
     compile('com.google.code.gson:gson:2.8.2')
     compile('org.springframework.boot:spring-boot-starter-actuator')
     compile('org.springframework.boot:spring-boot-starter-webflux')
+    compile('org.springframework.boot:spring-boot-starter-log4j2')
     compile('com.fasterxml.jackson.module:jackson-module-kotlin')
     compile('org.springframework.kafka:spring-kafka')
     compile('org.jetbrains.kotlin:kotlin-stdlib-jdk8')
     compile('org.jetbrains.kotlin:kotlin-reflect')
     compile('com.hazelcast:hazelcast-spring:3.9.3')
+    compile('com.hazelcast:hazelcast-zookeeper:3.6.3')
+    compile('org.apache.curator:curator-x-discovery:2.12.0')
+    compile('com.lmax:disruptor:3.4.1')
+    compile('log4j:log4j:1.2.17')
+    optional('org.springframework.boot:spring-boot-configuration-processor')
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('io.projectreactor:reactor-test')
+}
+
+compileJava.dependsOn(processResources)
+
+bootRun {
+    jvmArgs "-DLog4jContextSelector=org.apache.logging.log4j.core.async.AsyncLoggerContextSelector"
+}
+
+task buildImage(type: DockerBuildImage, dependsOn: bootJar) {
+    inputDir = projectDir
+    tag = 'poc/kafka-api:latest'
 }

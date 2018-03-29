@@ -1,0 +1,5 @@
+hazelcast.zookeeper:
+  host: localhost
+  port: 2181
+  path: hz-entities
+  group-id: entities
