@@ -12,6 +12,14 @@ services:
     environment:
       ADVERTISED_HOST: kafka
       NUM_PARTITIONS: 6
+  haproxy:
+    image: haproxy
+    ports:
+      - '8080:80'
+    volumes:
+      - './haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg'
+    depends_on:
+      - api
   api:
     image: poc/kafka-api
     ports:
