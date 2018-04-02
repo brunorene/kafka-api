@@ -50,7 +50,7 @@ class KafkaConfig {
     fun kafkaListenerContainerFactory(): KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, Map<String, Any>>> {
         val factory = ConcurrentKafkaListenerContainerFactory<String, Map<String, Any>>()
         factory.consumerFactory = consumerFactory()
-        factory.setConcurrency(3)
+        factory.setConcurrency(1)
         factory.containerProperties.pollTimeout = 3000
         factory.isBatchListener = true
         return factory
