@@ -85,11 +85,6 @@ bootRun {
     jvmArgs "-DLog4jContextSelector=org.apache.logging.log4j.core.async.AsyncLoggerContextSelector"
 }
 
-task buildImage(type: DockerBuildImage, dependsOn: bootJar) {
-    inputDir = projectDir
-    tag = 'poc/kafka-api:latest'
-}
-
 docker {
     registryCredentials {
         url = 'https://artifacts.ath.bskyb.com:5001'
@@ -98,7 +93,11 @@ docker {
     }
 }
 
+task buildImage(type: DockerBuildImage, dependsOn: bootJar) {
+    inputDir = projectDir
+    tag = "artifacts.ath.bskyb.com:5001/olisipo/poc/kafka-api:$version"
+}
+
 task pushImage(type: DockerPushImage, dependsOn: buildImage) {
-    imageName = 'poc/kafka-api:latest'
-    tag = "artifacts.ath.bskyb.com:5001/olisipo/poc/spring-boot-inmemory:$version"
+    imageName = buildImage.tag
 }
