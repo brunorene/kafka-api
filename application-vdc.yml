@@ -1,0 +1,8 @@
+#inmemory:
+#  host: zookeeper
+#  port: 2181
+#  path: hazelcast
+#  group-id: entities
+kafka:
+  host: ut009083
+  port: 29092
