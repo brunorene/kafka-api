@@ -1,4 +1,4 @@
-package uk.sky.poc.kafkaapi
+package uk.sky.poc.splitapi
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication

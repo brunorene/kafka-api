@@ -1,4 +1,4 @@
-package uk.sky.poc.kafkaapi.config
+package uk.sky.poc.splitapi.config
 
 import org.mapdb.DBMaker
 import org.mapdb.Serializer.STRING

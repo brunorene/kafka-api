@@ -1,4 +1,4 @@
-package uk.sky.poc.kafkaapi.support
+package uk.sky.poc.splitapi.support
 
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken

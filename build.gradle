@@ -2,7 +2,7 @@ import com.bmuschko.gradle.docker.tasks.image.*
 
 buildscript {
     ext {
-        kotlinVersion = '1.2.30'
+        kotlinVersion = '1.2.31'
         springBootVersion = '2.0.0.RELEASE'
     }
     repositories {
@@ -28,7 +28,7 @@ apply plugin: 'propdeps-idea'
 apply plugin: 'com.bmuschko.docker-remote-api'
 
 group = 'uk.sky.poc'
-version = '1.0.0'
+version = '1.0.5'
 sourceCompatibility = 1.8
 compileKotlin {
     kotlinOptions {
@@ -95,7 +95,7 @@ docker {
 
 task buildImage(type: DockerBuildImage, dependsOn: bootJar) {
     inputDir = projectDir
-    tag = "artifacts.ath.bskyb.com:5001/olisipo/poc/kafka-api:$version"
+    tag = "artifacts.ath.bskyb.com:5001/olisipo/poc/spring-boot-split-api:$version"
 }
 
 task pushImage(type: DockerPushImage, dependsOn: buildImage) {

@@ -4,5 +4,5 @@
 #  path: hazelcast
 #  group-id: entities
 kafka:
-  host: ut009083
+  host: kafka
   port: 29092

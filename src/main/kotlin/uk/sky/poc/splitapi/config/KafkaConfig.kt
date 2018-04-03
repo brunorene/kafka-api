@@ -1,4 +1,4 @@
-package uk.sky.poc.kafkaapi.config
+package uk.sky.poc.splitapi.config
 
 import org.apache.kafka.clients.consumer.ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG
 import org.apache.kafka.clients.consumer.ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG
@@ -13,8 +13,8 @@ import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory
 import org.springframework.kafka.config.KafkaListenerContainerFactory
 import org.springframework.kafka.core.*
 import org.springframework.kafka.listener.ConcurrentMessageListenerContainer
-import uk.sky.poc.kafkaapi.support.MapDeserializer
-import uk.sky.poc.kafkaapi.support.MapSerializer
+import uk.sky.poc.splitapi.support.MapDeserializer
+import uk.sky.poc.splitapi.support.MapSerializer
 
 @Configuration
 @ConfigurationProperties(prefix = "kafka")

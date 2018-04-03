@@ -1,13 +1,12 @@
-package uk.sky.poc.kafkaapi.web
+package uk.sky.poc.splitapi.web
 
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.http.HttpStatus.NOT_FOUND
 import org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE
 import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.web.bind.annotation.*
 import reactor.core.publisher.Mono
-import uk.sky.poc.kafkaapi.support.Error
-import uk.sky.poc.kafkaapi.support.loadKafkaData
+import uk.sky.poc.splitapi.support.Error
+import uk.sky.poc.splitapi.support.loadKafkaData
 
 @RestController
 class KafkaController(private val kafkaTemplate: KafkaTemplate<String, Map<String, Any>>,

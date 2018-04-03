@@ -1,10 +1,10 @@
-package uk.sky.poc.kafkaapi.support
+package uk.sky.poc.splitapi.support
 
 import com.google.gson.stream.JsonReader
 import org.apache.kafka.clients.producer.ProducerRecord
 import org.springframework.kafka.core.KafkaTemplate
 import reactor.core.publisher.Mono
-import uk.sky.poc.kafkaapi.config.KafkaConfig
+import uk.sky.poc.splitapi.config.KafkaConfig
 import java.io.FileReader
 
 fun loadKafkaData(kafkaTemplate: KafkaTemplate<String, Map<String, Any>>): Mono<String> {
