@@ -29,7 +29,7 @@ apply plugin: 'propdeps-idea'
 apply plugin: 'com.bmuschko.docker-remote-api'
 
 group = 'uk.sky.poc'
-version = '1.1.1'
+version = '1.1.2'
 sourceCompatibility = 1.8
 compileKotlin {
     kotlinOptions {

@@ -28,7 +28,7 @@ class KafkaListener(private val entities: MutableMap<String, String>) : Consumer
 
     @KafkaListener(topics = [ENTITIES], containerFactory = FACTORY, groupId = "spring-boot-split-api")
     fun receiveEntities(results: List<Map<String, String>>) {
-//        log.info("received {} items", results.size)
+        log.info("received {} items", results.size)
         for (map in results)
             entities[map["id"].toString()] = gson.toJson(map)
     }
