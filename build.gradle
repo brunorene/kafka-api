@@ -29,7 +29,7 @@ apply plugin: 'propdeps-idea'
 apply plugin: 'com.bmuschko.docker-remote-api'
 
 group = 'uk.sky.poc'
-version = '1.1.0'
+version = '1.1.1'
 sourceCompatibility = 1.8
 compileKotlin {
     kotlinOptions {
@@ -67,10 +67,8 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-log4j2')
     compile('com.fasterxml.jackson.module:jackson-module-kotlin')
     compile('org.springframework.kafka:spring-kafka')
-    compile('org.jetbrains.kotlin:kotlin-stdlib-jdk8')
+    compile('org.jetbrains.kotlin:kotlin-stdlib')
     compile('org.jetbrains.kotlin:kotlin-reflect')
-    compile('it.unimi.dsi:fastutil:8.1.1')
-    compile('net.openhft:zero-allocation-hashing:0.8')
     compile('org.mapdb:mapdb:3.0.5')
     compile('com.lmax:disruptor:3.4.1')
     compile('log4j:log4j:1.2.17')
