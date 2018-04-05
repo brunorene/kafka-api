@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Configuration
 
 //const val ENTITIES = "entities"
 
+const val SEED = 32
+
 @Configuration
 //@ConfigurationProperties(prefix = "inmemory")
 class InMemoryConfig {

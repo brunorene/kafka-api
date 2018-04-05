@@ -16,6 +16,10 @@ import org.springframework.kafka.listener.ConcurrentMessageListenerContainer
 import uk.sky.poc.splitapi.support.MapDeserializer
 import uk.sky.poc.splitapi.support.MapSerializer
 
+const val ID = "id"
+const val FACTORY = "kafkaListenerContainerFactory"
+const val ENTITIES = "uk_entities"
+
 @Configuration
 @ConfigurationProperties(prefix = "kafka")
 @EnableKafka
@@ -23,12 +27,6 @@ class KafkaConfig {
 
     lateinit var host: String
     lateinit var port: String
-
-    companion object {
-        const val TOPIC = "ENTITIES"
-        const val ID = "id"
-        const val FACTORY = "kafkaListenerContainerFactory"
-    }
 
     // PRODUCER
 
@@ -50,7 +48,7 @@ class KafkaConfig {
     fun kafkaListenerContainerFactory(): KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, Map<String, Any>>> {
         val factory = ConcurrentKafkaListenerContainerFactory<String, Map<String, Any>>()
         factory.consumerFactory = consumerFactory()
-        factory.setConcurrency(1)
+        factory.setConcurrency(2)
         factory.containerProperties.pollTimeout = 3000
         factory.isBatchListener = true
         return factory

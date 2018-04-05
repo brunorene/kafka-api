@@ -4,7 +4,8 @@ import com.google.gson.stream.JsonReader
 import org.apache.kafka.clients.producer.ProducerRecord
 import org.springframework.kafka.core.KafkaTemplate
 import reactor.core.publisher.Mono
-import uk.sky.poc.splitapi.config.KafkaConfig
+import uk.sky.poc.splitapi.config.ENTITIES
+import uk.sky.poc.splitapi.config.ID
 import java.io.FileReader
 
 fun loadKafkaData(kafkaTemplate: KafkaTemplate<String, Map<String, Any>>): Mono<String> {
@@ -36,8 +37,7 @@ fun loadKafkaData(kafkaTemplate: KafkaTemplate<String, Map<String, Any>>): Mono<
                                 }
                             }
                             reader.endObject()
-                            kafkaTemplate.send(ProducerRecord<String, Map<String, Any>>(KafkaConfig.TOPIC,
-                                    map[KafkaConfig.ID].toString(), map))
+                            kafkaTemplate.send(ProducerRecord<String, Map<String, Any>>(ENTITIES, map[ID].toString(), map))
                             count++
                         }
                         reader.endArray()

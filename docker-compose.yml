@@ -21,7 +21,7 @@ services:
     depends_on:
       - api
   api:
-    image: poc/kafka-api
+    image: artifacts.ath.bskyb.com:5001/olisipo/poc/spring-boot-split-api:1.0.5
     ports:
       - '8080'
     depends_on:
